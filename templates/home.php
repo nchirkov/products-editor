@@ -6,8 +6,19 @@
     <title>Products Editor</title>
     <meta name="description" content="Simple Products Editor">
  </head>
-
+ 
 <body>
-    Hello, world!
+
+<?php $products = getProducts(); ?>
+<?php foreach($products as $product): ?>
+    <?= $product['id'] ?>
+    <?= $product['title'] ?>
+    <?= $product['description'] ?>
+    <?= $product['price'] ?>
+    <?= $product['image_url'] ?>
+    <br>
+<?php endforeach; ?>
+    
 </body>
+
 </html>
