@@ -30,5 +30,11 @@
         $isForward = true;
     }
 
+    $order = "asc";
+    if (isset($_GET['desc']))
+    {
+       $order = "desc";  
+    };
+
     require_once config('template_path').'/list.php';
 ?>

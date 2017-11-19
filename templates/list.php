@@ -9,13 +9,14 @@
  
 <body>
 
-<?php 
-    $products = getProducts($id, $isForward);
-    $previousId = $isForward ? $products[0]['id'] : $products[count($products) - 1]['id'];
-    $nextId = $isForward ? $products[count($products) - 1]['id'] : $products[0]['id'];
-?>
+<a href="?asc">Sort by Id ASC</a>
+<a href="?desc">Sort by Id DESC</a>
+<br>
 
 <?php 
+    $products = getProducts($id, $isForward, $order);
+    $previousId = $isForward ? $products[0]['id'] : $products[count($products) - 1]['id'];
+    $nextId = $isForward ? $products[count($products) - 1]['id'] : $products[0]['id'];
     if ($isForward)
     {
         for ($i = 0; $i < count($products) ; $i++)
@@ -42,10 +43,10 @@
     }
 ?>
 
-<a href="?first">First</a>
-<a href="?previousId=<?= $previousId ?>">Previous</a>
-<a href="?nextId=<?= $nextId ?>">Next</a>
-<a href="?last">Last</a>
+<a href="?first&<?= $order ?>">First</a>
+<a href="?previousId=<?= $previousId ?>&<?= $order ?>">Previous</a>
+<a href="?nextId=<?= $nextId ?>&<?= $order ?>">Next</a>
+<a href="?last&<?= $order ?>">Last</a>
 
 </body>
 

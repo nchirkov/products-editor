@@ -15,7 +15,7 @@
     function getProduct()
     {}    
 
-    function getProducts($id, $isForward)
+    function getProducts($id, $isForward, $order)
     {
         global $sqlConnection;
         global $memcacheConnection;
@@ -25,13 +25,47 @@
             return $rows;
         }
         
-        $whereClause = $id !== 0
-            ? $isForward
-                ? "WHERE `id` > ".$id
-                : "WHERE `id` < ".$id
-            : "";
-
-        $sortOrder =  $isForward ? "" : "DESC";
+        if ($id !== 0)
+        {
+            if ($order === "asc")
+            {
+                if ($isForward)
+                {
+                    $whereClause =  "WHERE `id` > ".$id;
+                    $sortOrder = "ASC";
+                }
+                else
+                {
+                    $whereClause =  "WHERE `id` < ".$id;
+                    $sortOrder = "DESC";
+                }
+            }
+            else
+            {
+                if ($isForward)
+                {
+                    $whereClause =  "WHERE `id` < ".$id;
+                    $sortOrder = "DESC";
+                }
+                else
+                {
+                    $whereClause =  "WHERE `id` > ".$id;
+                    $sortOrder = "ASC";
+                }
+            }
+        }
+        else
+        {
+            $whereClause = "";
+            if ($order === "asc")
+            {
+                $sortOrder = $isForward ? "ASC" : "DESC";
+            }
+            else
+            {
+                $sortOrder = $isForward ? "DESC" : "ASC";
+            }
+        }
 
         $result = mysqli_query($sqlConnection, "SELECT `id`, `title`, `description`, `price`, `image_url`
             FROM `products`
