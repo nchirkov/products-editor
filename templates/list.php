@@ -16,20 +16,24 @@
 <br>
 
 <?php 
-    $products = getProducts($id, $isForward, $order, $field);
+    $products = getProducts($id, $isForward, $order, $field, $price);
     $previousId = $isForward ? $products[0]['id'] : $products[count($products) - 1]['id'];
     $nextId = $isForward ? $products[count($products) - 1]['id'] : $products[0]['id'];
-    $nextPrice = 0;
-    $previousPrice = 0;
+    $previousPrice = $isForward ? $products[0]['price'] : $products[count($products) - 1]['price'];
+    $nextPrice =  $isForward ? $products[count($products) - 1]['price'] : $products[0]['price'];
 
     if ($isForward)
     {
         for ($i = 0; $i < count($products) ; $i++)
         { 
             echo $products[$i]['id'];
+            echo "   ";
             echo $products[$i]['title'];
+            echo "   ";
             echo $products[$i]['description'];
+            echo "   ";
             echo $products[$i]['price'];
+            echo "   ";
             echo $products[$i]['image_url'];
             echo "<br>";
         }
@@ -39,9 +43,13 @@
         for ($i = count($products) - 1; $i >=0; $i--)
         { 
             echo $products[$i]['id'];
+            echo "   ";
             echo $products[$i]['title'];
+            echo "   ";
             echo $products[$i]['description'];
+            echo "   ";
             echo $products[$i]['price'];
+            echo "   ";
             echo $products[$i]['image_url'];
             echo "<br>";
         }

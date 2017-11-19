@@ -15,7 +15,7 @@
     function getProduct()
     {}    
 
-    function getProducts($id, $isForward, $order, $field)
+    function getProducts($id, $isForward, $order, $field, $price)
     {
         global $sqlConnection;
         global $memcacheConnection;
@@ -36,6 +36,11 @@
                         $whereClause =  "WHERE `id` > ".$id;
                         $sortOrder = "ORDER BY `id` ASC";
                     }
+                    else
+                    {
+                        $whereClause =  "WHERE `price` > ".$price." OR `price` = ".$price." AND `id` > ".$id;
+                        $sortOrder = "ORDER BY `price` ASC, `id` ASC";
+                    }
                 }
                 else
                 {
@@ -43,6 +48,11 @@
                     {
                         $whereClause =  "WHERE `id` < ".$id;
                         $sortOrder = "ORDER BY `id` DESC";
+                    }
+                    else
+                    {
+                        $whereClause =  "WHERE `price` < ".$price." OR `price` = ".$price." AND `id` < ".$id;
+                        $sortOrder = "ORDER BY `price` DESC, `id` DESC";
                     }
                 }
             }
@@ -55,6 +65,11 @@
                         $whereClause =  "WHERE `id` < ".$id;
                         $sortOrder = "ORDER BY `id` DESC";
                     }
+                    else
+                    {
+                        $whereClause =  "WHERE `price` < ".$price." OR `price` = ".$price." AND `id` < ".$id;
+                        $sortOrder = "ORDER BY `price` DESC, `id` DESC";
+                    }
                 }
                 else
                 {
@@ -62,6 +77,11 @@
                     {
                         $whereClause =  "WHERE `id` > ".$id;
                         $sortOrder = "ORDER BY `id` ASC";
+                    }
+                    else
+                    {
+                        $whereClause =  "WHERE `price` > ".$price." OR `price` = ".$price." AND `id` > ".$id;
+                        $sortOrder = "ORDER BY `price` ASC, `id` ASC";
                     }
                 }
             }
@@ -71,11 +91,25 @@
             $whereClause = "";
             if ($order === "asc")
             {
-                $sortOrder = $isForward ? "ORDER BY `id` ASC" : "ORDER BY `id` DESC";
+                if ($field === "id")
+                {
+                    $sortOrder = $isForward ? "ORDER BY `id` ASC" : "ORDER BY `id` DESC";
+                }
+                else
+                {
+                    $sortOrder = $isForward ? "ORDER BY `price` ASC, `id` ASC" : "ORDER BY `price` DESC, `id` DESC";
+                }
             }
             else
             {
-                $sortOrder = $isForward ? "ORDER BY `id` DESC" : "ORDER BY `id` ASC";
+                if ($field === "id")
+                {
+                    $sortOrder = $isForward ? "ORDER BY `id` DESC" : "ORDER BY `id` ASC";
+                }
+                else
+                {
+                    $sortOrder = $isForward ? "ORDER BY `price` DESC, `id` DESC" : "ORDER BY `price` ASC, `id` ASC";
+                }
             }
         }
 
