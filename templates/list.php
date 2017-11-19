@@ -10,24 +10,6 @@
 <body>
 
 <?php 
-    if ($nextId > 0)
-    {
-        $id = $nextId;
-        $isForward = true;
-    }
-    elseif ($previousId > 0)
-    {
-        $id = $previousId;
-        $isForward = false;
-    }
-    else
-    {
-        $id = 0;
-        $isForward = true;
-    }
-?>
-
-<?php 
     $products = getProducts($id, $isForward);
     $previousId = $isForward ? $products[0]['id'] : $products[count($products) - 1]['id'];
     $nextId = $isForward ? $products[count($products) - 1]['id'] : $products[0]['id'];
@@ -60,8 +42,10 @@
     }
 ?>
 
+<a href="?first">First</a>
 <a href="?previousId=<?= $previousId ?>">Previous</a>
 <a href="?nextId=<?= $nextId ?>">Next</a>
+<a href="?last">Last</a>
 
 </body>
 

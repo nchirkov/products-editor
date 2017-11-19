@@ -24,13 +24,18 @@
         {
             return $rows;
         }
+        
+        $whereClause = $id !== 0
+            ? $isForward
+                ? "WHERE `id` > ".$id
+                : "WHERE `id` < ".$id
+            : "";
 
-        $whereClause = $isForward ? "> ".$id : "< ".$id;
         $sortOrder =  $isForward ? "" : "DESC";
 
         $result = mysqli_query($sqlConnection, "SELECT `id`, `title`, `description`, `price`, `image_url`
             FROM `products`
-            WHERE `id` ".$whereClause."
+           ".$whereClause."
             ORDER BY `id`".$sortOrder."
             LIMIT 10"
         );
