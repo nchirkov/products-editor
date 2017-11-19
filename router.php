@@ -1,39 +1,31 @@
 <?php
-    $nextId = -1;
+    $id = 0;
+    $isForward = true;
+   
     if (isset($_GET['nextId'])) {
-        $nextId = $_GET['nextId'];
+        $id = $_GET['nextId'];
     }
 
-    $previousId = -1;
     if (isset($_GET['previousId'])) {
-        $previousId = $_GET['previousId'];
+        $id = $_GET['previousId'];
+        $isForward = false;
     }
  
-    if ($nextId > 0)
+    if (isset($_GET['last']))
     {
-        $id = $nextId;
-        $isForward = true;
-    }
-    elseif ($previousId > 0)
-    {
-        $id = $previousId;
         $isForward = false;
     }
-    elseif (isset($_GET['last']))
-    {
-        $id = 0;
-        $isForward = false;
-    }
-    else
-    {
-        $id = 0;
-        $isForward = true;
-    }
-
+    
     $order = "asc";
     if (isset($_GET['desc']))
     {
        $order = "desc";  
+    };
+
+    $field = "id";
+    if (isset($_GET['price']))
+    {
+       $field = "price";  
     };
 
     require_once config('template_path').'/list.php';

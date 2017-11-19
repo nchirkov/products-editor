@@ -15,7 +15,7 @@
     function getProduct()
     {}    
 
-    function getProducts($id, $isForward, $order)
+    function getProducts($id, $isForward, $order, $field)
     {
         global $sqlConnection;
         global $memcacheConnection;
@@ -31,26 +31,38 @@
             {
                 if ($isForward)
                 {
-                    $whereClause =  "WHERE `id` > ".$id;
-                    $sortOrder = "ASC";
+                    if ($field === "id")
+                    {
+                        $whereClause =  "WHERE `id` > ".$id;
+                        $sortOrder = "ORDER BY `id` ASC";
+                    }
                 }
                 else
                 {
-                    $whereClause =  "WHERE `id` < ".$id;
-                    $sortOrder = "DESC";
+                    if ($field === "id")
+                    {
+                        $whereClause =  "WHERE `id` < ".$id;
+                        $sortOrder = "ORDER BY `id` DESC";
+                    }
                 }
             }
             else
             {
                 if ($isForward)
                 {
-                    $whereClause =  "WHERE `id` < ".$id;
-                    $sortOrder = "DESC";
+                    if ($field === "id")
+                    {
+                        $whereClause =  "WHERE `id` < ".$id;
+                        $sortOrder = "ORDER BY `id` DESC";
+                    }
                 }
                 else
                 {
-                    $whereClause =  "WHERE `id` > ".$id;
-                    $sortOrder = "ASC";
+                    if ($field === "id")
+                    {
+                        $whereClause =  "WHERE `id` > ".$id;
+                        $sortOrder = "ORDER BY `id` ASC";
+                    }
                 }
             }
         }
@@ -59,18 +71,18 @@
             $whereClause = "";
             if ($order === "asc")
             {
-                $sortOrder = $isForward ? "ASC" : "DESC";
+                $sortOrder = $isForward ? "ORDER BY `id` ASC" : "ORDER BY `id` DESC";
             }
             else
             {
-                $sortOrder = $isForward ? "DESC" : "ASC";
+                $sortOrder = $isForward ? "ORDER BY `id` DESC" : "ORDER BY `id` ASC";
             }
         }
 
         $result = mysqli_query($sqlConnection, "SELECT `id`, `title`, `description`, `price`, `image_url`
             FROM `products`
-           ".$whereClause."
-            ORDER BY `id`".$sortOrder."
+            ".$whereClause."
+            ".$sortOrder."
             LIMIT 10"
         );
 
@@ -96,8 +108,9 @@
         }
 
         for ($i = 0; $i <= 1100000; $i++) {
+            $price = $i % 10000;
             mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
-                VALUES ('Product$i', 'Description$i', '$i', 'image$i.png')"
+                VALUES ('Product$i', 'Description$i', '$price', 'image$i.png')"
             );
         }
 
