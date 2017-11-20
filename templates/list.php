@@ -17,14 +17,34 @@
 
 <?php 
     $products = getProducts($id, $isForward, $order, $field, $price);
-    $previousId = $isForward ? $products[0]['id'] : $products[count($products) - 1]['id'];
-    $nextId = $isForward ? $products[count($products) - 1]['id'] : $products[0]['id'];
-    $previousPrice = $isForward ? $products[0]['price'] : $products[count($products) - 1]['price'];
-    $nextPrice =  $isForward ? $products[count($products) - 1]['price'] : $products[0]['price'];
 
+    $count = count($products);
+    $limitCount = config('itemPerPage') + 1;
+    
+    if ($count === $limitCount)
+    {
+        if ($id !== 0)
+        {
+            $showNext = true;
+            $showPrevious = true;
+        }
+        else
+        {
+            $showNext = $isForward;
+            $showPrevious = !$isForward;
+        }
+       
+        $count = $count - 1;
+    }
+
+    $previousId = $isForward ? $products[0]['id'] : $products[$count - 1]['id'];
+    $nextId = $isForward ? $products[$count - 1]['id'] : $products[0]['id'];
+    $previousPrice = $isForward ? $products[0]['price'] : $products[$count - 1]['price'];
+    $nextPrice =  $isForward ? $products[$count - 1]['price'] : $products[0]['price'];
+    
     if ($isForward)
     {
-        for ($i = 0; $i < count($products) ; $i++)
+        for ($i = 0; $i < $count ; $i++)
         { 
             echo $products[$i]['id'];
             echo "   ";
@@ -40,7 +60,7 @@
     }
     else
     {
-        for ($i = count($products) - 1; $i >=0; $i--)
+        for ($i = $count - 1; $i >=0; $i--)
         { 
             echo $products[$i]['id'];
             echo "   ";
@@ -57,8 +77,15 @@
 ?>
 
 <a href="?first&<?= $order ?>&<?= $field ?>">First</a>
+
+<?php if ($showPrevious): ?>
 <a href="?previousId=<?= $previousId ?>&previousPrice=<?= $previousPrice ?>&<?= $order ?>&<?= $field ?>">Previous</a>
+<?php endif; ?>
+
+<?php if ($showNext): ?>
 <a href="?nextId=<?= $nextId ?>&nextPrice=<?= $nextPrice ?>&<?= $order ?>&<?= $field ?>">Next</a>
+<?php endif; ?>
+
 <a href="?last&<?= $order ?>&<?= $field ?>">Last</a>
 
 </body>

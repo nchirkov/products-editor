@@ -113,11 +113,12 @@
             }
         }
 
+        $limitCount = config('itemPerPage') + 1;
         $result = mysqli_query($sqlConnection, "SELECT `id`, `title`, `description`, `price`, `image_url`
             FROM `products`
             ".$whereClause."
             ".$sortOrder."
-            LIMIT 10"
+            LIMIT $limitCount"
         );
 
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
