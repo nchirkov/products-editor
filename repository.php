@@ -19,8 +19,10 @@
     {
         global $sqlConnection;
         global $memcacheConnection;
-
-        if (false && $rows = memcache_get($memcacheConnection, 'allProducts'))
+        
+        $key = $id.$price.$field.$order.$isForward;
+ 
+        if ($rows = memcache_get($memcacheConnection, $key))
         {
             return $rows;
         }
@@ -127,7 +129,7 @@
         }
 
         mysqli_free_result($result);
-        memcache_set($memcacheConnection, 'allProducts', $rows);
+        memcache_set($memcacheConnection, $key, $rows);
 
         return $rows;
     }
