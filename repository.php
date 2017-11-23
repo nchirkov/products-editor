@@ -1,6 +1,6 @@
 <?php
     $sqlConnection = mysqli_connect(config('sql_host'), config('sql_user'),  config('sql_password'), config('sql_dbname'));
-    $memcacheConnection = memcache_connect(config('memcache_host'), config('memcache_port'));
+    $memcacheConnection = memcache_pconnect(config('memcache_host'), config('memcache_port'));
     initProducts();
 
     function createProduct()
