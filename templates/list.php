@@ -15,6 +15,9 @@
 <a href="?price&desc">Sort by Price DESC</a>
 <br>
 
+<a href="?action=add">Add</a>
+<br>
+
 <?php 
     $products = getProducts($id, $isForward, $order, $field, $price);
 
@@ -46,35 +49,29 @@
     {
         for ($i = 0; $i < $count ; $i++)
         { 
-            echo $products[$i]['id'];
-            echo "   ";
-            echo $products[$i]['title'];
-            echo "   ";
-            echo $products[$i]['description'];
-            echo "   ";
-            echo $products[$i]['price'];
-            echo "   ";
-            echo $products[$i]['image_url'];
-            echo "<br>";
+            outputProduct($products[$i]);
         }
     }
     else
     {
-        for ($i = $count - 1; $i >=0; $i--)
+        for ($i = $count - 1; $i >= 0; $i--)
         { 
-            echo $products[$i]['id'];
-            echo "   ";
-            echo $products[$i]['title'];
-            echo "   ";
-            echo $products[$i]['description'];
-            echo "   ";
-            echo $products[$i]['price'];
-            echo "   ";
-            echo $products[$i]['image_url'];
-            echo "<br>";
+            outputProduct($products[$i]);
         }
     }
 ?>
+
+<?php function outputProduct($product) {  ?>
+    <?= $product['id'] ?>
+    <?= $product['title'] ?>
+    <?= $product['description'] ?>
+    <?= $product['price'] ?>
+    <?= $product['image_url'] ?>
+    <a href="#">Edit</a>
+    <a href="#">Delete</a>
+    <br>
+<?php } ?>
+
 
 <a href="?first&<?= $order ?>&<?= $field ?>">First</a>
 

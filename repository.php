@@ -3,8 +3,17 @@
     $memcacheConnection = memcache_pconnect(config('memcache_host'), config('memcache_port'));
     initProducts();
 
-    function createProduct()
-    {}
+    function createProduct($title, $description, $price, $imageUrl)
+    {
+        global $sqlConnection;
+
+        if (!mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
+            VALUES ('$title', '$description', '$price', '$imageUrl')"
+        ))
+        {
+            return mysqli_error($sqlConnection);
+        }
+    }
 
     function updateProduct()
     {}
@@ -22,7 +31,7 @@
         
         $key = $id.$price.$field.$order.$isForward;
  
-        if ($rows = memcache_get($memcacheConnection, $key))
+        if (false && $rows = memcache_get($memcacheConnection, $key))
         {
             return $rows;
         }

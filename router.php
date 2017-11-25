@@ -1,46 +1,53 @@
 <?php
-    $id = 0;
-    $price = 0;
-    $isForward = true;
-    $showNext = false;
-    $showPrevious = false;
-   
-    if (isset($_GET['nextId'])) {
-        $id = $_GET['nextId'];
-        $showPrevious = true;
-    }
-
-    if (isset($_GET['previousId'])) {
-        $id = $_GET['previousId'];
-        $isForward = false;
-        $showNext = true;
-    }
-
-    if (isset($_GET['nextPrice'])) {
-        $price = $_GET['nextPrice'];
-    }
-
-    if (isset($_GET['previousPrice'])) {
-        $price = $_GET['previousPrice'];
-        $isForward = false;
-    }
- 
-    if (isset($_GET['last']))
+    if (isset($_GET['action']) && $_GET['action'] === "add")
     {
-        $isForward = false;
+        require_once config('template_path').'/edit.php';
     }
+    else
+    {
+        $id = 0;
+        $price = 0;
+        $isForward = true;
+        $showNext = false;
+        $showPrevious = false;
     
-    $order = "asc";
-    if (isset($_GET['desc']))
-    {
-       $order = "desc";  
-    };
+        if (isset($_GET['nextId'])) {
+            $id = $_GET['nextId'];
+            $showPrevious = true;
+        }
 
-    $field = "id";
-    if (isset($_GET['price']))
-    {
-       $field = "price";  
-    };
+        if (isset($_GET['previousId'])) {
+            $id = $_GET['previousId'];
+            $isForward = false;
+            $showNext = true;
+        }
 
-    require_once config('template_path').'/list.php';
+        if (isset($_GET['nextPrice'])) {
+            $price = $_GET['nextPrice'];
+        }
+
+        if (isset($_GET['previousPrice'])) {
+            $price = $_GET['previousPrice'];
+            $isForward = false;
+        }
+    
+        if (isset($_GET['last']))
+        {
+            $isForward = false;
+        }
+        
+        $order = "asc";
+        if (isset($_GET['desc']))
+        {
+            $order = "desc";  
+        };
+
+        $field = "id";
+        if (isset($_GET['price']))
+        {
+            $field = "price";  
+        };
+
+        require_once config('template_path').'/list.php';
+    }
 ?>
