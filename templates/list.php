@@ -67,8 +67,8 @@
     <?= $product['description'] ?>
     <?= $product['price'] ?>
     <?= $product['image_url'] ?>
-    <a href="#">Edit</a>
-    <a href="#">Delete</a>
+    <a href="?action=edit&id=<?= $product['id'] ?>">Edit</a>
+    <a href="?action=delete&id=<?= $product['id'] ?>">Delete</a>
     <br>
 <?php } ?>
 

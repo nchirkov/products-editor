@@ -2,6 +2,11 @@
     if (isset($_GET['action']) && $_GET['action'] === "add")
     {
         require_once config('template_path').'/edit.php';
+    } 
+    elseif (isset($_GET['action']) && $_GET['action'] === "edit" && isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        require_once config('template_path').'/edit.php';
     }
     else
     {

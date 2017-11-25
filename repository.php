@@ -15,14 +15,39 @@
         }
     }
 
-    function updateProduct()
-    {}
+    function updateProduct($id, $title, $description, $price, $imageUrl)
+    {
+        global $sqlConnection;
+
+        if (!mysqli_query($sqlConnection, "UPDATE `products` 
+            SET `title` = '$title', 
+                `description` = '$description',
+                `price` = '$price',
+                `image_url` = '$imageUrl'
+            WHERE `id` = '$id'"
+        ))
+        {
+            return mysqli_error($sqlConnection);
+        }
+    }
     
     function deleteProduct()
     {}
 
-    function getProduct()
-    {}    
+    function getProduct($id)
+    {
+        global $sqlConnection;
+
+        $result = mysqli_query($sqlConnection, "SELECT `title`, `description`, `price`, `image_url`
+                FROM `products`
+                WHERE `id` = $id"
+        );
+
+        $product = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        mysqli_free_result($result);
+
+        return $product;
+    }    
 
     function getProducts($id, $isForward, $order, $field, $price)
     {
