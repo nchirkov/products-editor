@@ -5,7 +5,23 @@
     <meta charset="utf-8">
     <title>Products Editor</title>
     <meta name="description" content="Simple Products Editor">
-    <link rel="stylesheet" type="text/css" href="<?= config('style_path').'/style.css' ?>">
+    <style>
+        .btn-link{
+            border:none;
+            outline:none;
+            background:none;
+            cursor:pointer;
+            color:#0000EE;
+            padding:0;
+            text-decoration:underline;
+            font-family:inherit;
+            font-size:inherit;
+        }
+
+        form {
+            display: inline-block;
+        }
+    </style>
  </head>
  
 <body>

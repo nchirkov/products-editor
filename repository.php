@@ -1,15 +1,23 @@
 <?php
+    const VERSION_KEY = "version";
+
     $sqlConnection = mysqli_connect(config('sql_host'), config('sql_user'),  config('sql_password'), config('sql_dbname'));
     $memcacheConnection = memcache_pconnect(config('memcache_host'), config('memcache_port'));
     initProducts();
+    initCache();
 
     function createProduct($title, $description, $price, $imageUrl)
     {
         global $sqlConnection;
+        global $memcacheConnection; 
 
-        if (!mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
+        if (mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
             VALUES ('$title', '$description', '$price', '$imageUrl')"
         ))
+        {
+            memcache_increment($memcacheConnection, VERSION_KEY);
+        }
+        else
         {
             return mysqli_error($sqlConnection);
         }
@@ -18,14 +26,19 @@
     function updateProduct($id, $title, $description, $price, $imageUrl)
     {
         global $sqlConnection;
+        global $memcacheConnection; 
 
-        if (!mysqli_query($sqlConnection, "UPDATE `products` 
+        if (mysqli_query($sqlConnection, "UPDATE `products` 
             SET `title` = '$title', 
                 `description` = '$description',
                 `price` = '$price',
                 `image_url` = '$imageUrl'
             WHERE `id` = '$id'"
         ))
+        {
+            memcache_increment($memcacheConnection, VERSION_KEY);
+        }
+        else
         {
             return mysqli_error($sqlConnection);
         }
@@ -34,10 +47,15 @@
     function deleteProduct($id)
     {
         global $sqlConnection;
+        global $memcacheConnection; 
         
-        if (!mysqli_query($sqlConnection, "DELETE FROM `products` 
+        if (mysqli_query($sqlConnection, "DELETE FROM `products` 
             WHERE `id` = '$id'"
         ))
+        {
+            memcache_increment($memcacheConnection, VERSION_KEY);
+        }
+        else
         {
             return mysqli_error($sqlConnection);
         }
@@ -61,11 +79,12 @@
     function getProducts($id, $isForward, $order, $field, $price)
     {
         global $sqlConnection;
-        global $memcacheConnection;
+        global $memcacheConnection;       
         
-        $key = $id.$price.$field.$order.$isForward;
+        $version = memcache_get($memcacheConnection, VERSION_KEY);
+        $key = $id.$price.$field.$order.$isForward.$version;
  
-        if (false && $rows = memcache_get($memcacheConnection, $key))
+        if ($rows = memcache_get($memcacheConnection, $key))
         {
             return $rows;
         }
@@ -195,5 +214,16 @@
         }
 
         mysqli_free_result($result);
+    }
+
+    function initCache()
+    {   
+        global $memcacheConnection;  
+        
+        $version = memcache_get($memcacheConnection, VERSION_KEY);
+        if (!isset($version))
+        {
+            memcache_set($memcacheConnection, VERSION_KEY, 0);
+        }
     }
 ?>
