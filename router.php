@@ -8,6 +8,11 @@
         $id = $_GET['id'];
         require_once config('template_path').'/edit.php';
     }
+    elseif (isset($_POST['delete']))
+    {
+        deleteProduct($_POST['delete']);
+        header('Location: /');
+    }
     else
     {
         $id = 0;

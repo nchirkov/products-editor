@@ -31,8 +31,17 @@
         }
     }
     
-    function deleteProduct()
-    {}
+    function deleteProduct($id)
+    {
+        global $sqlConnection;
+        
+        if (!mysqli_query($sqlConnection, "DELETE FROM `products` 
+            WHERE `id` = '$id'"
+        ))
+        {
+            return mysqli_error($sqlConnection);
+        }
+    }
 
     function getProduct($id)
     {

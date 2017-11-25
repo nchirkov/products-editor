@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Products Editor</title>
     <meta name="description" content="Simple Products Editor">
+    <link rel="stylesheet" type="text/css" href="<?= config('style_path').'/style.css' ?>">
  </head>
  
 <body>
@@ -68,8 +69,10 @@
     <?= $product['price'] ?>
     <?= $product['image_url'] ?>
     <a href="?action=edit&id=<?= $product['id'] ?>">Edit</a>
-    <a href="?action=delete&id=<?= $product['id'] ?>">Delete</a>
-    <br>
+    <form method="post" onclick="return confirm('Are you sure?')">
+        <button name="delete" value="<?= $product['id'] ?>" class="btn-link">Delete</button>
+    </form>
+   <br>
 <?php } ?>
 
 
