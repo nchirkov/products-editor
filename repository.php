@@ -241,7 +241,7 @@
         $version = memcache_get($memcacheConnection, VERSION_KEY);
         if (!$version)
         {
-            memcache_set($memcacheConnection, VERSION_KEY, 0);
+            memcache_set($memcacheConnection, VERSION_KEY, 1);
         }
     }
 ?>
