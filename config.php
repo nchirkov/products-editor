@@ -11,7 +11,7 @@
             'memcache_host' => 'localhost',
             'memcache_port' => '11211',
             'memcache_expiration' => 900,
-            'itemPerPage' => 25
+            'itemPerPage' => 10
         ];
 
         return isset($config[$key]) ? $config[$key] : null;

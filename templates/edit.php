@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Products Editor</title>
     <meta name="description" content="Simple Products Editor">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
  </head>
  
 <body>
@@ -36,30 +37,28 @@
             $product = getProduct($id);
         }
     ?>
-   
-    <form method="post">
 
-        <p>Product title:
-            <input type="text" name="title" value="<?= isset($id) ? htmlspecialchars($product['title']) : "" ?>" />
-        </p>
-        <p>Product description:
-            <input type="text" name="description" value="<?= isset($id) ? htmlspecialchars($product['description']) : "" ?>" />
-        </p>
-        <p>Product price:
-            <input type="text" name="price" value="<?= isset($id) ? $product['price'] : "" ?>" />
-        </p>
-        <p>Product image url:
-            <input type="text" name="image_url" value="<?= isset($id) ? htmlspecialchars($product['image_url']) : "" ?>" />
-        </p>
-        <p>
-            <input type="submit" name="submit" value="<?= isset($id) ? "Edit" : "Add" ?>"/>
-        </p>
-
-        <?php if (isset($id)): ?>
-            <input type="hidden" name="id" value="<?= $id ?>" />
-        <?php endif; ?>
-        
-    </form>
+   <div class="container">
+        <div class="row">
+            <form method="post">
+                <div class="form-group">
+                    <label>Product title</label>
+                    <input type="text" class="form-control" name="title" value="<?= isset($id) ? htmlspecialchars($product['title']) : "" ?>" />
+                    <label>Product description</label>
+                    <input type="text" class="form-control" name="description" value="<?= isset($id) ? htmlspecialchars($product['description']) : "" ?>" />
+                    <label>Product price</label>
+                    <input type="text" class="form-control" name="price" value="<?= isset($id) ? $product['price'] : "" ?>" />
+                    <label>Product image url</label>
+                    <input type="text" class="form-control" name="image_url" value="<?= isset($id) ? htmlspecialchars($product['image_url']) : "" ?>" />
+                    <input type="submit" class="btn btn-primary my-2" name="submit" value="<?= isset($id) ? "Edit" : "Add" ?>"/>
+                    <?php if (isset($id)): ?>
+                        <input type="hidden" name="id" value="<?= $id ?>" />
+                    <?php endif; ?>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </body>
 
 </html>
