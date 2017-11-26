@@ -3,7 +3,6 @@
     {
         $config = [
             'template_path' => 'templates',
-            'style_path' => 'styles',
             'sql_host' => 'localhost',
             'sql_user' => 'root',
             'sql_password' => '***',
