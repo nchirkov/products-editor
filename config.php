@@ -10,6 +10,7 @@
             'sql_dbname' => 'store',
             'memcache_host' => 'localhost',
             'memcache_port' => '11211',
+            'memcache_expiration' => 900,
             'itemPerPage' => 25
         ];
 

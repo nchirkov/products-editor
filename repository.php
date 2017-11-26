@@ -209,7 +209,7 @@
         }
 
         mysqli_free_result($result);
-        memcache_set($memcacheConnection, $key, $rows);
+        memcache_set($memcacheConnection, $key, $rows, 0, config('memcache_expiration'));
 
         return $rows;
     }
