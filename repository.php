@@ -11,6 +11,11 @@
         global $sqlConnection;
         global $memcacheConnection; 
 
+        $title = mysqli_real_escape_string($sqlConnection, $title);
+        $description = mysqli_real_escape_string($sqlConnection, $description);
+        $price = mysqli_real_escape_string($sqlConnection, $price);
+        $imageUrl = mysqli_real_escape_string($sqlConnection, $imageUrl);
+
         if (mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
             VALUES ('$title', '$description', '$price', '$imageUrl')"
         ))
@@ -27,6 +32,12 @@
     {
         global $sqlConnection;
         global $memcacheConnection; 
+
+        $id = mysqli_real_escape_string($sqlConnection, $id);
+        $title = mysqli_real_escape_string($sqlConnection, $title);
+        $description = mysqli_real_escape_string($sqlConnection, $description);
+        $price = mysqli_real_escape_string($sqlConnection, $price);
+        $imageUrl = mysqli_real_escape_string($sqlConnection, $imageUrl);
 
         if (mysqli_query($sqlConnection, "UPDATE `products` 
             SET `title` = '$title', 
@@ -49,6 +60,8 @@
         global $sqlConnection;
         global $memcacheConnection; 
         
+        $id = mysqli_real_escape_string($sqlConnection, $id);
+
         if (mysqli_query($sqlConnection, "DELETE FROM `products` 
             WHERE `id` = '$id'"
         ))
@@ -65,6 +78,8 @@
     {
         global $sqlConnection;
 
+        $id = mysqli_real_escape_string($sqlConnection, $id);
+
         $result = mysqli_query($sqlConnection, "SELECT `title`, `description`, `price`, `image_url`
                 FROM `products`
                 WHERE `id` = $id"
@@ -80,6 +95,9 @@
     {
         global $sqlConnection;
         global $memcacheConnection;       
+
+        $id = mysqli_real_escape_string($sqlConnection, $id);
+        $price = mysqli_real_escape_string($sqlConnection, $price);
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);
         $key = $id.$price.$field.$order.$isForward.$version;
@@ -89,7 +107,7 @@
             return $rows;
         }
         
-        if ($id !== 0)
+        if ($id != 0)
         {
             if ($order === "asc")
             {

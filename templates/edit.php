@@ -14,14 +14,21 @@
         {
             if (isset($_POST['id']) )
             {
-                updateProduct($_POST['id'], $_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
+                $error = updateProduct($_POST['id'], $_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
             }
             else
             {
-                createProduct($_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
+                $error = createProduct($_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
             }
        
-            header('Location: /');
+            if ($error)
+            {
+                echo $error;
+            }
+            else
+            {
+                header('Location: /');
+            }
         }
 
         if (isset($id))
