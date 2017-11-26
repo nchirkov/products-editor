@@ -100,7 +100,7 @@
         $price = mysqli_real_escape_string($sqlConnection, $price);
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);
-        $key = $id.$price.$field.$order.$isForward.$version;
+        $key = $id."_".$price."_".$field."_".$order."_".$isForward."_".$version;
 
         if ($rows = memcache_get($memcacheConnection, $key))
         {
