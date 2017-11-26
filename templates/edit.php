@@ -33,16 +33,16 @@
     <form method="post">
 
         <p>Product title:
-            <input type="text" name="title" value="<?= isset($id) ? $product['title'] : "" ?>" />
+            <input type="text" name="title" value="<?= isset($id) ? htmlspecialchars($product['title']) : "" ?>" />
         </p>
         <p>Product description:
-            <input type="text" name="description" value="<?= isset($id) ? $product['description'] : "" ?>" />
+            <input type="text" name="description" value="<?= isset($id) ? htmlspecialchars($product['description']) : "" ?>" />
         </p>
         <p>Product price:
             <input type="text" name="price" value="<?= isset($id) ? $product['price'] : "" ?>" />
         </p>
         <p>Product image url:
-            <input type="text" name="image_url" value="<?= isset($id) ? $product['image_url'] : "" ?>" />
+            <input type="text" name="image_url" value="<?= isset($id) ? htmlspecialchars($product['image_url']) : "" ?>" />
         </p>
         <p>
             <input type="submit" name="submit" value="<?= isset($id) ? "Edit" : "Add" ?>"/>

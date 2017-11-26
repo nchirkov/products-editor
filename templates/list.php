@@ -80,10 +80,10 @@
 
 <?php function outputProduct($product) {  ?>
     <?= $product['id'] ?>
-    <?= $product['title'] ?>
-    <?= $product['description'] ?>
+    <?= htmlspecialchars($product['title']) ?>
+    <?= htmlspecialchars($product['description']) ?>
     <?= $product['price'] ?>
-    <?= $product['image_url'] ?>
+    <?= htmlspecialchars($product['image_url']) ?>
     <a href="?action=edit&id=<?= $product['id'] ?>">Edit</a>
     <form method="post" onclick="return confirm('Are you sure?')">
         <button name="delete" value="<?= $product['id'] ?>" class="btn-link">Delete</button>
