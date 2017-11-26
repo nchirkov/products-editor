@@ -83,7 +83,7 @@
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);
         $key = $id.$price.$field.$order.$isForward.$version;
- 
+
         if ($rows = memcache_get($memcacheConnection, $key))
         {
             return $rows;
@@ -221,7 +221,7 @@
         global $memcacheConnection;  
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);
-        if (!isset($version))
+        if (!$version)
         {
             memcache_set($memcacheConnection, VERSION_KEY, 0);
         }
