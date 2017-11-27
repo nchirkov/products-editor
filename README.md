@@ -8,4 +8,5 @@ Application demo http://products-editor.northeurope.cloudapp.azure.com
 | Successful responses | 60000 |
 | Data sent by Loader| 8.07 MB |
 | Received by clients | 496 MB |
+
 Detail report http://bit.ly/2A9mXut
