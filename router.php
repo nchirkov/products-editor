@@ -52,10 +52,10 @@
             $order = "desc";  
         };
 
-        $field = "id";
+        $orderField = "id";
         if (isset($_GET['price']))
         {
-            $field = "price";  
+            $orderField = "price";  
         };
 
         require_once config('template_path').'/list.php';

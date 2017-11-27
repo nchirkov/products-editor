@@ -91,7 +91,7 @@
         return $product;
     }    
 
-    function getProducts($id, $isForward, $order, $field, $price)
+    function getProducts($id, $price, $isForward, $order, $orderField)
     {
         global $sqlConnection;
         global $memcacheConnection;       
@@ -100,7 +100,7 @@
         $price = mysqli_real_escape_string($sqlConnection, $price);
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);
-        $key = $id."_".$price."_".$field."_".$order."_".$isForward."_".$version;
+        $key = $id."_".$price."_".$orderField."_".$order."_".$isForward."_".$version;
 
         if ($rows = memcache_get($memcacheConnection, $key))
         {
@@ -113,7 +113,7 @@
             {
                 if ($isForward)
                 {
-                    if ($field === "id")
+                    if ($orderField === "id")
                     {
                         $whereClause =  "WHERE `id` > ".$id;
                         $sortOrder = "ORDER BY `id` ASC";
@@ -126,7 +126,7 @@
                 }
                 else
                 {
-                    if ($field === "id")
+                    if ($orderField === "id")
                     {
                         $whereClause =  "WHERE `id` < ".$id;
                         $sortOrder = "ORDER BY `id` DESC";
@@ -142,7 +142,7 @@
             {
                 if ($isForward)
                 {
-                    if ($field === "id")
+                    if ($orderField === "id")
                     {
                         $whereClause =  "WHERE `id` < ".$id;
                         $sortOrder = "ORDER BY `id` DESC";
@@ -155,7 +155,7 @@
                 }
                 else
                 {
-                    if ($field === "id")
+                    if ($orderField === "id")
                     {
                         $whereClause =  "WHERE `id` > ".$id;
                         $sortOrder = "ORDER BY `id` ASC";
@@ -173,7 +173,7 @@
             $whereClause = "";
             if ($order === "asc")
             {
-                if ($field === "id")
+                if ($orderField === "id")
                 {
                     $sortOrder = $isForward ? "ORDER BY `id` ASC" : "ORDER BY `id` DESC";
                 }
@@ -184,7 +184,7 @@
             }
             else
             {
-                if ($field === "id")
+                if ($orderField === "id")
                 {
                     $sortOrder = $isForward ? "ORDER BY `id` DESC" : "ORDER BY `id` ASC";
                 }

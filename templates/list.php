@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                 <?php 
-                    $products = getProducts($id, $isForward, $order, $field, $price);
+                    $products = getProducts($id, $price, $isForward, $order, $orderField);
 
                     $count = count($products);
                     $limitCount = config('itemPerPage') + 1;
@@ -89,16 +89,16 @@
 
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="?first&<?= $order ?>&<?= $field ?>">First</a>
+                    <a class="page-link" href="?first&<?= $order ?>&<?= $orderField ?>">First</a>
                 </li>
                 <li class="page-item <?= $showPrevious ? "" : "disabled" ?>">
-                    <a class="page-link" href="?previousId=<?= $previousId ?>&previousPrice=<?= $previousPrice ?>&<?= $order ?>&<?= $field ?>">Previous</a>
+                    <a class="page-link" href="?previousId=<?= $previousId ?>&previousPrice=<?= $previousPrice ?>&<?= $order ?>&<?= $orderField ?>">Previous</a>
                 </li>
                 <li class="page-item <?= $showNext ? "" : "disabled" ?>">
-                    <a class="page-link" href="?nextId=<?= $nextId ?>&nextPrice=<?= $nextPrice ?>&<?= $order ?>&<?= $field ?>">Next</a>
+                    <a class="page-link" href="?nextId=<?= $nextId ?>&nextPrice=<?= $nextPrice ?>&<?= $order ?>&<?= $orderField ?>">Next</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?last&<?= $order ?>&<?= $field ?>">Last</a>
+                    <a class="page-link" href="?last&<?= $order ?>&<?= $orderField ?>">Last</a>
                 </li>
             </ul>
         </div>
