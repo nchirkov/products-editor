@@ -107,92 +107,13 @@
             return $rows;
         }
         
-        if ($id != 0)
+        if ($order === "asc" && $isForward || $order === "desc" && !$isForward)
         {
-            if ($order === "asc")
-            {
-                if ($isForward)
-                {
-                    if ($orderField === "id")
-                    {
-                        $whereClause =  "WHERE `id` > ".$id;
-                        $sortOrder = "ORDER BY `id` ASC";
-                    }
-                    else
-                    {
-                        $whereClause =  "WHERE `price` > ".$price." OR `price` = ".$price." AND `id` > ".$id;
-                        $sortOrder = "ORDER BY `price` ASC, `id` ASC";
-                    }
-                }
-                else
-                {
-                    if ($orderField === "id")
-                    {
-                        $whereClause =  "WHERE `id` < ".$id;
-                        $sortOrder = "ORDER BY `id` DESC";
-                    }
-                    else
-                    {
-                        $whereClause =  "WHERE `price` < ".$price." OR `price` = ".$price." AND `id` < ".$id;
-                        $sortOrder = "ORDER BY `price` DESC, `id` DESC";
-                    }
-                }
-            }
-            else
-            {
-                if ($isForward)
-                {
-                    if ($orderField === "id")
-                    {
-                        $whereClause =  "WHERE `id` < ".$id;
-                        $sortOrder = "ORDER BY `id` DESC";
-                    }
-                    else
-                    {
-                        $whereClause =  "WHERE `price` < ".$price." OR `price` = ".$price." AND `id` < ".$id;
-                        $sortOrder = "ORDER BY `price` DESC, `id` DESC";
-                    }
-                }
-                else
-                {
-                    if ($orderField === "id")
-                    {
-                        $whereClause =  "WHERE `id` > ".$id;
-                        $sortOrder = "ORDER BY `id` ASC";
-                    }
-                    else
-                    {
-                        $whereClause =  "WHERE `price` > ".$price." OR `price` = ".$price." AND `id` > ".$id;
-                        $sortOrder = "ORDER BY `price` ASC, `id` ASC";
-                    }
-                }
-            }
+            selectByAsc($orderField, $id, $price, $whereClause, $sortOrder);
         }
         else
         {
-            $whereClause = "";
-            if ($order === "asc")
-            {
-                if ($orderField === "id")
-                {
-                    $sortOrder = $isForward ? "ORDER BY `id` ASC" : "ORDER BY `id` DESC";
-                }
-                else
-                {
-                    $sortOrder = $isForward ? "ORDER BY `price` ASC, `id` ASC" : "ORDER BY `price` DESC, `id` DESC";
-                }
-            }
-            else
-            {
-                if ($orderField === "id")
-                {
-                    $sortOrder = $isForward ? "ORDER BY `id` DESC" : "ORDER BY `id` ASC";
-                }
-                else
-                {
-                    $sortOrder = $isForward ? "ORDER BY `price` DESC, `id` DESC" : "ORDER BY `price` ASC, `id` ASC";
-                }
-            }
+            selectByDesc($orderField, $id, $price, $whereClause, $sortOrder);
         }
 
         $limitCount = config('itemPerPage') + 1;
@@ -212,6 +133,34 @@
         memcache_set($memcacheConnection, $key, $rows, 0, config('memcache_expiration'));
 
         return $rows;
+    }
+
+    function selectByAsc($orderField, $id, $price, &$whereClause, &$sortOrder)
+    {
+        if ($orderField === "id")
+        {
+            $whereClause =  $id == 0 ? "" : "WHERE `id` > ".$id;
+            $sortOrder = "ORDER BY `id` ASC";
+        }
+        else
+        {
+            $whereClause =  $id == 0 ? "" : "WHERE `price` > ".$price." OR `price` = ".$price." AND `id` > ".$id;
+            $sortOrder = "ORDER BY `price` ASC, `id` ASC";
+        }
+    }
+
+    function selectByDesc($orderField, $id, $price, &$whereClause, &$sortOrder)
+    {
+        if ($orderField === "id")
+        {
+            $whereClause = $id == 0 ? "" : "WHERE `id` < ".$id;
+            $sortOrder = "ORDER BY `id` DESC";
+        }
+        else
+        {
+            $whereClause = $id == 0 ? "" : "WHERE `price` < ".$price." OR `price` = ".$price." AND `id` < ".$id;
+            $sortOrder = "ORDER BY `price` DESC, `id` DESC";
+        }
     }
 
     function initProducts()
