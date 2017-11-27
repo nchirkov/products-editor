@@ -1,7 +1,7 @@
 <?php
     const VERSION_KEY = "version";
 
-    $sqlConnection = mysqli_connect(config('sql_host'), config('sql_user'),  config('sql_password'), config('sql_dbname'));
+    $sqlConnection = mysqli_connect(config('sql_host'), config('sql_user'), config('sql_password'), config('sql_dbname'));
     $memcacheConnection = memcache_pconnect(config('memcache_host'), config('memcache_port'));
     initProducts();
     initCache();
@@ -54,12 +54,12 @@
             return mysqli_error($sqlConnection);
         }
     }
-    
+
     function deleteProduct($id)
     {
         global $sqlConnection;
         global $memcacheConnection; 
-        
+
         $id = mysqli_real_escape_string($sqlConnection, $id);
 
         if (mysqli_query($sqlConnection, "DELETE FROM `products` 
@@ -89,16 +89,16 @@
         mysqli_free_result($result);
 
         return $product;
-    }    
+    }
 
     function getProducts($id, $price, $isForward, $order, $orderField)
     {
         global $sqlConnection;
-        global $memcacheConnection;       
+        global $memcacheConnection;
 
         $id = mysqli_real_escape_string($sqlConnection, $id);
         $price = mysqli_real_escape_string($sqlConnection, $price);
-        
+
         $version = memcache_get($memcacheConnection, VERSION_KEY);
         $key = $id."_".$price."_".$orderField."_".$order."_".$isForward."_".$version;
 
@@ -106,7 +106,7 @@
         {
             return $rows;
         }
-        
+
         if ($order === "asc" && $isForward || $order === "desc" && !$isForward)
         {
             selectByAsc($orderField, $id, $price, $whereClause, $sortOrder);
@@ -173,7 +173,8 @@
             return;
         }
 
-        for ($i = 0; $i <= 1100000; $i++) {
+        for ($i = 0; $i <= 1100000; $i++)
+        {
             $price = $i % 10000;
             mysqli_query($sqlConnection, "INSERT INTO `products` (`title`, `description`, `price`, `image_url`)
                 VALUES ('Product$i', 'Description$i', '$price', 'image$i.png')"
@@ -184,7 +185,7 @@
     }
 
     function initCache()
-    {   
+    {
         global $memcacheConnection;  
         
         $version = memcache_get($memcacheConnection, VERSION_KEY);

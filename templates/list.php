@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
  </head>
- 
+
 <body>
     <div class="container">
         <div class="row">
@@ -26,12 +26,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php 
+                <?php
                     $products = getProducts($id, $price, $isForward, $order, $orderField);
 
                     $count = count($products);
                     $limitCount = config('itemPerPage') + 1;
-                    
+
                     if ($count === $limitCount)
                     {
                         if ($id !== 0)
@@ -44,7 +44,7 @@
                             $showNext = $isForward;
                             $showPrevious = !$isForward;
                         }
-                    
+
                         $count = $count - 1;
                     }
 
@@ -52,18 +52,18 @@
                     $nextId = $isForward ? $products[$count - 1]['id'] : $products[0]['id'];
                     $previousPrice = $isForward ? $products[0]['price'] : $products[$count - 1]['price'];
                     $nextPrice =  $isForward ? $products[$count - 1]['price'] : $products[0]['price'];
-                    
+
                     if ($isForward)
                     {
                         for ($i = 0; $i < $count ; $i++)
-                        { 
+                        {
                             outputProduct($products[$i]);
                         }
                     }
                     else
                     {
                         for ($i = $count - 1; $i >= 0; $i--)
-                        { 
+                        {
                             outputProduct($products[$i]);
                         }
                     }

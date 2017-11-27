@@ -7,13 +7,13 @@
     <meta name="description" content="Simple Products Editor">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
  </head>
- 
+
 <body>
 
     <?php
         if (isset($_POST['submit']))
         {
-            if (isset($_POST['id']) )
+            if (isset($_POST['id']))
             {
                 $error = updateProduct($_POST['id'], $_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
             }
@@ -58,7 +58,7 @@
             </form>
         </div>
     </div>
-    
+
 </body>
 
 </html>

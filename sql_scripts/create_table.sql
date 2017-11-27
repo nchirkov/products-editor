@@ -1,4 +1,4 @@
-CREATE TABLE products ( 
+CREATE TABLE products (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
     title varchar(45) NOT NULL,
     description text NOT NULL,
