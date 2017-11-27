@@ -11,15 +11,15 @@
 <body>
 
     <?php
-        if (isset($_POST['submit']))
+        if (isset($_POST["submit"]))
         {
-            if (isset($_POST['id']))
+            if (isset($_POST["id"]))
             {
-                $error = updateProduct($_POST['id'], $_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
+                $error = updateProduct($_POST["id"], $_POST["title"], $_POST["description"], $_POST["price"], $_POST["image_url"]);
             }
             else
             {
-                $error = createProduct($_POST['title'], $_POST['description'], $_POST['price'], $_POST['image_url']);
+                $error = createProduct($_POST["title"], $_POST["description"], $_POST["price"], $_POST["image_url"]);
             }
        
             if ($error)
@@ -28,7 +28,7 @@
             }
             else
             {
-                header('Location: /');
+                header("Location: /");
             }
         }
 
@@ -43,13 +43,13 @@
             <form method="post">
                 <div class="form-group">
                     <label>Product title</label>
-                    <input type="text" class="form-control" name="title" value="<?= isset($id) ? htmlspecialchars($product['title']) : "" ?>" />
+                    <input type="text" class="form-control" name="title" value="<?= isset($id) ? htmlspecialchars($product["title"]) : "" ?>" />
                     <label>Product description</label>
-                    <input type="text" class="form-control" name="description" value="<?= isset($id) ? htmlspecialchars($product['description']) : "" ?>" />
+                    <input type="text" class="form-control" name="description" value="<?= isset($id) ? htmlspecialchars($product["description"]) : "" ?>" />
                     <label>Product price</label>
-                    <input type="text" class="form-control" name="price" value="<?= isset($id) ? $product['price'] : "" ?>" />
+                    <input type="text" class="form-control" name="price" value="<?= isset($id) ? $product["price"] : "" ?>" />
                     <label>Product image url</label>
-                    <input type="text" class="form-control" name="image_url" value="<?= isset($id) ? htmlspecialchars($product['image_url']) : "" ?>" />
+                    <input type="text" class="form-control" name="image_url" value="<?= isset($id) ? htmlspecialchars($product["image_url"]) : "" ?>" />
                     <input type="submit" class="btn btn-primary my-2" name="submit" value="<?= isset($id) ? "Edit" : "Add" ?>"/>
                     <?php if (isset($id)): ?>
                         <input type="hidden" name="id" value="<?= $id ?>" />

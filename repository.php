@@ -1,8 +1,8 @@
 <?php
     const VERSION_KEY = "version";
 
-    $sqlConnection = mysqli_connect(config('sql_host'), config('sql_user'), config('sql_password'), config('sql_dbname'));
-    $memcacheConnection = memcache_pconnect(config('memcache_host'), config('memcache_port'));
+    $sqlConnection = mysqli_connect(config("sql_host"), config("sql_user"), config("sql_password"), config("sql_dbname"));
+    $memcacheConnection = memcache_pconnect(config("memcache_host"), config("memcache_port"));
     initProducts();
     initCache();
 
@@ -116,7 +116,7 @@
             selectByDesc($orderField, $id, $price, $whereClause, $sortOrder);
         }
 
-        $limitCount = config('itemPerPage') + 1;
+        $limitCount = config("itemPerPage") + 1;
         $result = mysqli_query($sqlConnection, "SELECT `id`, `title`, `description`, `price`, `image_url`
             FROM `products`
             ".$whereClause."
@@ -130,7 +130,7 @@
         }
 
         mysqli_free_result($result);
-        memcache_set($memcacheConnection, $key, $rows, 0, config('memcache_expiration'));
+        memcache_set($memcacheConnection, $key, $rows, 0, config("memcache_expiration"));
 
         return $rows;
     }

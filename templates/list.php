@@ -30,7 +30,7 @@
                     $products = getProducts($id, $price, $isForward, $order, $orderField);
 
                     $count = count($products);
-                    $limitCount = config('itemPerPage') + 1;
+                    $limitCount = config("itemPerPage") + 1;
 
                     if ($count === $limitCount)
                     {
@@ -48,10 +48,10 @@
                         $count = $count - 1;
                     }
 
-                    $previousId = $isForward ? $products[0]['id'] : $products[$count - 1]['id'];
-                    $nextId = $isForward ? $products[$count - 1]['id'] : $products[0]['id'];
-                    $previousPrice = $isForward ? $products[0]['price'] : $products[$count - 1]['price'];
-                    $nextPrice =  $isForward ? $products[$count - 1]['price'] : $products[0]['price'];
+                    $previousId = $isForward ? $products[0]["id"] : $products[$count - 1]["id"];
+                    $nextId = $isForward ? $products[$count - 1]["id"] : $products[0]["id"];
+                    $previousPrice = $isForward ? $products[0]["price"] : $products[$count - 1]["price"];
+                    $nextPrice =  $isForward ? $products[$count - 1]["price"] : $products[0]["price"];
 
                     if ($isForward)
                     {
@@ -71,15 +71,15 @@
 
                 <?php function outputProduct($product) {  ?>
                     <tr>
-                        <td><?= $product['id'] ?></td>
-                        <td><?= htmlspecialchars($product['title']) ?></td>
-                        <td><?= htmlspecialchars($product['description']) ?></td>
-                        <td><?= $product['price'] ?></td>
-                        <td><?= htmlspecialchars($product['image_url']) ?></td>
-                        <td><a href="?action=edit&id=<?= $product['id'] ?>">Edit</a></td>
+                        <td><?= $product["id"] ?></td>
+                        <td><?= htmlspecialchars($product["title"]) ?></td>
+                        <td><?= htmlspecialchars($product["description"]) ?></td>
+                        <td><?= $product["price"] ?></td>
+                        <td><?= htmlspecialchars($product["image_url"]) ?></td>
+                        <td><a href="?action=edit&id=<?= $product["id"] ?>">Edit</a></td>
                         <td>
                             <form method="post" onclick="return confirm('Are you sure?')">
-                                <button  name="delete" value="<?= $product['id'] ?>" class="btn btn-link p-0">Delete</button>
+                                <button  name="delete" value="<?= $product["id"] ?>" class="btn btn-link p-0">Delete</button>
                             </form>
                         </td>
                     </tr>
